@@ -13,6 +13,13 @@ class ViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Storm Viewer"
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .action,
+            target: self,
+            action: #selector(shareStormViewer)
+        )
+        
         navigationController?.navigationBar.prefersLargeTitles = true
         
         let fileManager = FileManager.default
@@ -54,6 +61,14 @@ class ViewController: UITableViewController {
             viewController.totalAmountOfImages = pictures.count
             navigationController?.pushViewController(viewController, animated: true)
         }
+    }
+    
+    @objc func shareStormViewer() {
+        let viewController = UIActivityViewController(activityItems: [self.title ?? "Storm Viewer"], applicationActivities: [])
+        
+        viewController.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        
+        present(viewController, animated: true)
     }
 }
 
